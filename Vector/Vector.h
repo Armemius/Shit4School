@@ -64,13 +64,8 @@ IntVector::IntVector(const IntVector& vector) {
 IntVector::IntVector(IntVector&& vector) {
     this->size_ = vector.size_;
     this->capacity_ = vector.capacity_;
-    this->elem_ = new int[capacity_];
-    for (int it = 0; it < vector.size_; ++it) {
-        elem_[it] = vector.elem_[it];
-    }
-    vector.size_ = 0;
-    vector.capacity_ = 1;
-    vector.elem_ = new int[1];
+    this->elem_ = vector.elem_;
+    vector = IntVector();
 }
 
 IntVector::~IntVector() {
@@ -86,12 +81,9 @@ void IntVector::Swap(IntVector& vector) noexcept {
     for (int it = 0; it < vector.size_; ++it) {
         this->elem_[it] = vector.elem_[it];
     }
-    vector.size_ = copy.size_;
     vector.capacity_ = copy.capacity_;
-    vector.elem_ = new int[copy.capacity_];
-    for (int it = 0; it < copy.size_; ++it) {
-        vector.elem_[it] = copy.elem_[it];
-    }
+    vector.size_ = copy.size_;
+    vector.elem_ = copy.elem_;
 }
 
 const int IntVector::Size() const {
